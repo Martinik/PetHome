@@ -9,6 +9,14 @@ namespace PetHome.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+
+            routes.MapRoute(
+               name: "Admin",
+               url: "admin/{action}/{id}",
+               defaults: new { controller = "Admin", action = "AdminPanel", area = "admin", id = UrlParameter.Optional }
+           );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

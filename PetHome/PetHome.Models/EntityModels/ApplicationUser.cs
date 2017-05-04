@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Collections;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,8 +13,10 @@ namespace PetHome.Models.EntityModels
             this.LostPets = new List<LostPet>();
             this.FoundPets = new List<FoundPet>();
             this.PostedComments = new List<Comment>();
-
+            
         }
+
+        
 
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -25,8 +26,7 @@ namespace PetHome.Models.EntityModels
         public virtual List<LostPet> LostPets { get; set; }
         public virtual List<FoundPet> FoundPets { get; set; }
         public virtual List<Comment> PostedComments { get; set; }
-
-
+        public bool IsAdmin { get; set; }
 
 
 

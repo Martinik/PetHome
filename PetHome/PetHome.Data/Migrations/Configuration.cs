@@ -2,8 +2,6 @@ namespace PetHome.Data.Migrations
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -15,7 +13,7 @@ namespace PetHome.Data.Migrations
             this.AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(PetHome.Data.PetHomeContext context)
+        protected override void Seed(PetHomeContext context)
         {
             if (!context.Roles.Any(role => role.Name == "Regular"))
             {

@@ -1,24 +1,84 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+}
+/*Temporary navbar container fix*/
+.navbar-toggler {
+    z-index: 1;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+#banner {
+    color: inherit;
+    text-decoration: none;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+@media (max-width: 576px) {
+    nav > .container {
+        width: 100%;
+    }
+}
+/* Temporary fix for img-fluid sizing within the carousel */
+
+.carousel-item.active,
+.carousel-item-next,
+.carousel-item-prev {
+    display: block;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+
+/*Home page sliders*/
+.slide-container {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.slide-image {
+    opacity: 1;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    width: inherit;
+    max-height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.slide-middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.slide-container:hover .slide-image {
+    opacity: 0.3;
+}
+
+.slide-container:hover .slide-middle {
+    opacity: 1;
+}
+
+.slide-text {
+    background-color: #b6c5cb;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: 8px;
+}
+
+#loginWrapper {
+    background-color: rgba(236, 231, 231, 0.28);
+}
+
+
+#pageNotFoundImg {
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

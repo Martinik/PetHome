@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using PetHome.Models.EntityModels;
 using PetHome.Models.ViewModels.Users;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PetHome.Models.BindingModels;
 
 namespace PetHome.Services
@@ -21,8 +18,8 @@ namespace PetHome.Services
             IEnumerable<LostPet> lostPets = currentUser.LostPets;
             IEnumerable<FoundPet> foundPets = currentUser.FoundPets;
 
-            vm.LostPets = Mapper.Map<IEnumerable<LostPet>, IEnumerable<UserPetVM>>(lostPets);
-            vm.FoundPets = Mapper.Map<IEnumerable<FoundPet>, IEnumerable<UserPetVM>>(foundPets);
+            vm.LostPets = Mapper.Map<IEnumerable<LostPet>, IEnumerable<UserLostPetVM>>(lostPets);
+            vm.FoundPets = Mapper.Map<IEnumerable<FoundPet>, IEnumerable<UserFoundPetVM>>(foundPets);
 
             return vm;
         }
@@ -32,6 +29,14 @@ namespace PetHome.Services
             ApplicationUser currentUser = this.Context.Users.FirstOrDefault(u => u.UserName == userName);
             EditUserVM vm = Mapper.Map<ApplicationUser, EditUserVM>(currentUser);
 
+            return vm;
+        }
+
+        public EditUserVM GetEditUserVmByUsername(string username)
+        {
+            ApplicationUser user = this.Context.Users.FirstOrDefault(u => u.UserName == username);
+            EditUserVM vm = Mapper.Map<ApplicationUser, EditUserVM>(user);
+            
             return vm;
         }
 

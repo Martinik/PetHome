@@ -32,3 +32,6 @@ C:\Users\Y50\Desktop\Project\PetHome\PetHome.Services\bin\Debug\System.Web.WebPa
 C:\Users\Y50\Desktop\Project\PetHome\PetHome.Services\obj\Debug\PetHome.Services.csprojResolveAssemblyReference.cache
 C:\Users\Y50\Desktop\Project\PetHome\PetHome.Services\obj\Debug\PetHome.Services.dll
 C:\Users\Y50\Desktop\Project\PetHome\PetHome.Services\obj\Debug\PetHome.Services.pdb
+C:\Users\Y50\Desktop\Project\PetHome\PetHome.Services\bin\Debug\EntityFramework.SqlServerCompact.dll
+C:\Users\Y50\Desktop\Project\PetHome\PetHome.Services\bin\Debug\System.Data.SqlServerCe.dll
+C:\Users\Y50\Desktop\Project\PetHome\PetHome.Services\bin\Debug\EntityFramework.SqlServerCompact.xml

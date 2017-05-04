@@ -1,11 +1,8 @@
 ﻿using PetHome.Models.BindingModels.LostPets;
-using PetHome.Models.ViewModels;
 using PetHome.Models.ViewModels.LostPets;
 using PetHome.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PetHome.Web.Controllers
@@ -25,8 +22,6 @@ namespace PetHome.Web.Controllers
         public ActionResult Index()
         {
             IEnumerable<LostPetVM> vm = this.service.GetLostPetsVM();
-           
-
             return View(vm);
         }
 
@@ -43,6 +38,28 @@ namespace PetHome.Web.Controllers
         [Authorize]
         public ActionResult Create(CreateLostPetBM bind)
         {
+
+            var validImageTypes = new string[]
+            {
+                 "image/gif",
+                 "image/jpeg",
+                 "image/pjpeg",
+                 "image/jpg",
+                 "image/png"
+            };
+
+            if (bind.Thumbnail == null || bind.Thumbnail.ContentLength == 0)
+            {
+                ModelState.AddModelError("Thumbnail", "This field is required");
+            }
+            else if (!validImageTypes.Contains(bind.Thumbnail.ContentType))
+            {
+                ModelState.AddModelError("Thumbnail", "Please choose either a GIF, JPG or PNG image.");
+            }
+
+
+
+
             if (this.ModelState.IsValid)
             {
                 string username = User.Identity.Name;
@@ -62,7 +79,7 @@ namespace PetHome.Web.Controllers
         public ActionResult Edit(int id)
         {
             string username = User.Identity.Name;
-            if (this.service.PetBelongsToUser(username, id))
+            if (this.service.PetBelongsToUser(username, id) || User.IsInRole("Admin"))
             {
                 EditLostPetVM vm = this.service.GetEditPetVM(id);
 
@@ -73,6 +90,100 @@ namespace PetHome.Web.Controllers
             return RedirectToAction("index", "home");
 
             //TODO:  add custom redirect/ error message
+        }
+
+
+        [HttpPost, Route("edit/{id}")]
+        [Authorize]
+        public ActionResult Edit(EditLostPetBM bind)
+        {
+            string username = User.Identity.Name;
+
+            var validImageTypes = new string[]
+            {
+                 "image/gif",
+                 "image/jpeg",
+                 "image/pjpeg",
+                 "image/jpg",
+                 "image/png"
+            };
+
+            if (bind.Thumbnail == null || bind.Thumbnail.ContentLength == 0)
+            {
+                ModelState.AddModelError("Thumbnail", "This field is required");
+            }
+            else if (!validImageTypes.Contains(bind.Thumbnail.ContentType))
+            {
+                ModelState.AddModelError("Thumbnail", "Please choose either a GIF, JPG or PNG image.");
+            }
+
+
+            if (this.ModelState.IsValid && this.service.PetBelongsToUser(username, bind.Id) || User.IsInRole("Admin"))
+            {
+                try
+                {
+                    this.service.EditPet(bind);
+                    return RedirectToAction("profile", "users");
+                }
+                catch (System.Web.HttpException e)
+                {
+                    ModelState.AddModelError("Thumbnail", e.Message);
+                }
+
+            }
+
+
+            return RedirectToAction("index", "home");
+
+            //TODO:  add custom redirect/ error message
+        }
+
+
+
+        [HttpGet, Route("delete/{id}")]
+        [Authorize]
+        public ActionResult ConfirmDelete(int id)
+        {
+            string username = User.Identity.Name;
+
+            if (this.service.PetBelongsToUser(username, id) || User.IsInRole("Admin"))
+            {
+                LostPetVM vm = this.service.GetLostPetVM(username, id);
+
+                return View(vm);
+            }
+
+            return RedirectToAction("index", "home");
+
+            //TODO: Add custom error page
+        }
+
+        [HttpPost, Route("delete/{id}")]
+        [Authorize]
+        public ActionResult ConfirmDelete(DeleteLostPetBM bind)
+        {
+            string username = User.Identity.Name;
+
+            if (ModelState.IsValid && this.service.PetBelongsToUser(username, bind.Id) || User.IsInRole("Admin"))
+            {
+                this.service.DeleteLostPet(bind.Id);
+
+                return RedirectToAction("profile", "users");
+            }
+
+            return RedirectToAction("index", "home");
+            //TODO: Add custom error page OR Error Messages
+        }
+
+
+        [HttpGet, Route("details/{id}")]
+        public ActionResult Details(int id)
+        {
+            var username = User.Identity.Name;
+            var vm = this.service.GetLostPetVM(username, id);
+
+            return View(vm);
+
         }
     }
 }

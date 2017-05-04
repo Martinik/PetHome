@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -93,16 +94,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingModels\Comments\AddComentBM.cs" />
     <Compile Include="BindingModels\EditUserBM.cs" />
+    <Compile Include="BindingModels\FoundPets\CreateFoundPetBM.cs" />
+    <Compile Include="BindingModels\FoundPets\DeleteFoundPetBM.cs" />
+    <Compile Include="BindingModels\FoundPets\EditFoundPetBM.cs" />
+    <Compile Include="BindingModels\Home\SearchBM.cs" />
     <Compile Include="BindingModels\LostPets\CreateLostPetBM.cs" />
+    <Compile Include="BindingModels\LostPets\DeleteLostPetBM.cs" />
+    <Compile Include="BindingModels\LostPets\EditLostPetBM.cs" />
     <Compile Include="EntityModels\ApplicationUser.cs" />
     <Compile Include="EntityModels\Comment.cs" />
-    <Compile Include="EntityModels\ForSalePet.cs" />
     <Compile Include="EntityModels\FoundPet.cs" />
     <Compile Include="EntityModels\LostPet.cs" />
     <Compile Include="EntityModels\Pet.cs" />
     <Compile Include="Enums\AnimalType.cs" />
     <Compile Include="Enums\Tempers.cs" />
+    <Compile Include="Interfaces\ICommentable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginListViewModel.cs" />
@@ -113,9 +121,22 @@
     <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyCodeViewModel.cs" />
+    <Compile Include="ViewModels\Admin\AdminPanelFoundPetVM.cs" />
+    <Compile Include="ViewModels\Admin\AdminPanelLostPetVM.cs" />
+    <Compile Include="ViewModels\Admin\AdminPanelVM.cs" />
+    <Compile Include="ViewModels\Admin\AdminPanelUserVM.cs" />
+    <Compile Include="ViewModels\Comments\CommentUserVM.cs" />
+    <Compile Include="ViewModels\Comments\CommentVM.cs" />
+    <Compile Include="ViewModels\FoundPets\CreateFoundPetVM.cs" />
+    <Compile Include="ViewModels\FoundPets\EditFoundPetVM.cs" />
+    <Compile Include="ViewModels\FoundPets\FoundPetVM.cs" />
+    <Compile Include="ViewModels\Home\HomeIndexVM.cs" />
     <Compile Include="ViewModels\Home\NavBarUserVM.cs" />
+    <Compile Include="ViewModels\Home\SearchedFoundPetVM.cs" />
+    <Compile Include="ViewModels\Home\SearchedLostPetVM.cs" />
+    <Compile Include="ViewModels\Home\SearchResultVM.cs" />
     <Compile Include="ViewModels\LostPets\CreateLostPetVM.cs" />
-    <Compile Include="ViewModels\LostPets\EditPetVM.cs" />
+    <Compile Include="ViewModels\LostPets\EditLostPetVM.cs" />
     <Compile Include="ViewModels\LostPets\LostPetVM.cs" />
     <Compile Include="ViewModels\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\Manage\ChangePasswordViewModel.cs" />
@@ -127,7 +148,8 @@
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\Users\EditUserVM.cs" />
     <Compile Include="ViewModels\Users\ProfileVM.cs" />
-    <Compile Include="ViewModels\Users\UserPetVM.cs" />
+    <Compile Include="ViewModels\Users\UserFoundPetVM.cs" />
+    <Compile Include="ViewModels\Users\UserLostPetVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />

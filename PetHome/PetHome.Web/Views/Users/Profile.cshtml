@@ -11,6 +11,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
@@ -52,10 +60,105 @@
 
     </dl>
 </div>
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (User.Identity.Name == Model.UserName || User.IsInRole("Admin"))
+    {
+       @Html.ActionLink("Edit Profile", "Edit", new { username = Model.UserName });
+    }
+
 </p>
+
+
+
+<h2>Listed Pets</h2>
+<br />
+<h3>Lost</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LostPets.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LostPets.First().AnimalType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LostPets.First().Thumbnail)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var lostPet in Model.LostPets)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => lostPet.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => lostPet.AnimalType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => lostPet.Thumbnail)
+            </td>
+            <td>
+                @if (User.Identity.Name == Model.UserName || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", "LostPets", new { id = lostPet.Id }, null);
+                    @:|
+                }
+                @Html.ActionLink("Details", "Details", "LostPets", new { id = lostPet.Id }, null) |
+                @Html.ActionLink("Delete", "ConfirmDelete", "LostPets", new { id = lostPet.Id }, null)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+<br />
+<hr />
+<br />
+
+<h3>Found</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FoundPets.First().AnimalType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FoundPets.First().Thumbnail)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var foundPet in Model.FoundPets)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => foundPet.AnimalType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => foundPet.Thumbnail)
+            </td>
+            <td>
+               @if (User.Identity.Name == Model.UserName || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", "FoudPets", new { id = foundPet.Id }, null);
+                @:|
+                }
+                @Html.ActionLink("Details", "Details", "FoundPets", null, new { id = foundPet.Id }) |
+                @Html.ActionLink("Delete", "ConfirmDelete", "FoundPets", new { id = foundPet.Id }, null)
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+
 
 
 

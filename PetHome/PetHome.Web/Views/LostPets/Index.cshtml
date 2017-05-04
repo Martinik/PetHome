@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PetHome.Models.ViewModels.LostPetVM>
+﻿@model IEnumerable<PetHome.Models.ViewModels.LostPets.LostPetVM>
 
 @{
     ViewBag.Title = "Lost Pets";
@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.Age)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Breed)
+            @Html.DisplayNameFor(model => model.AnimalType)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastSeenLocation)
@@ -27,37 +27,44 @@
             @Html.DisplayNameFor(model => model.LastSeenTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Thumnbail)
+            Thumbnail
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Age)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Breed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastSeenLocation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastSeenTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Thumnbail)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastSeenLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastSeenTime)
+            </td>
+            <td>
+                <img src="@item.ThumbnailUrl" />
+            </td>
+            <td>
+                @if (User.Identity.IsAuthenticated && (item.AssociatedUsername == User.Identity.Name || User.IsInRole("Admin")))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id });
+                    @: |
+                    @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.Id })
+                    @: |
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+
+            </td>
+        </tr>
+    }
 
 </table>

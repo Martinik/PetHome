@@ -14,7 +14,6 @@ namespace PetHome.Data
 
         public DbSet<FoundPet> FoundPets { get; set; }
         public DbSet<LostPet> LostPets { get; set; }
-        public DbSet<ForSalePet> ForSalePets { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
 

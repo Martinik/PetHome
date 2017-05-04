@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetHome.Models.EntityModels
 {
+    [Table("FoundPets")]
     public class FoundPet : Pet
     {
         public FoundPet()
         {
-            this.DistinguishingFeatures = new HashSet<string>();
+            this.IsLostPet = false;
         }
+        public string ActionTaken { get; set; }
 
-        public ICollection<string> DistinguishingFeatures { get; set; }
+
     }
 }

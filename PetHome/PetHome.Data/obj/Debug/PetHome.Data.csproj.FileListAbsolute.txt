@@ -30,4 +30,3 @@ C:\Users\Y50\Desktop\Project\PetHome\PetHome.Data\bin\Debug\System.Web.WebPages.
 C:\Users\Y50\Desktop\Project\PetHome\PetHome.Data\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\Y50\Desktop\Project\PetHome\PetHome.Data\obj\Debug\PetHome.Data.Migrations.initial.resources
 C:\Users\Y50\Desktop\Project\PetHome\PetHome.Data\obj\Debug\PetHome.Data.csproj.GenerateResource.Cache
-C:\Users\Y50\Desktop\Project\PetHome\PetHome.Data\obj\Debug\PetHome.Data.Migrations.petToPets.resources

@@ -1,4 +1,5 @@
-﻿using PetHome.Models.ViewModels.Home;
+﻿using PetHome.Models.BindingModels.Home;
+using PetHome.Models.ViewModels.Home;
 using PetHome.Services;
 using System.Web.Mvc;
 
@@ -13,33 +14,54 @@ namespace PetHome.Web.Controllers
             this.service = new HomeService();
         }
 
+        [HttpGet, Route("index")]
         public ActionResult Index()
         {
-            return View();
+            HomeIndexVM vm = this.service.GetHomeIndexVM();
+
+            return View(vm);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+ 
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        [ChildActionOnly]
-        public ActionResult RenderUserName()
-        {
-            string username = User.Identity.Name; 
-            NavBarUserVM vm = this.service.GetNavBarUserVM(username);
+        //[ChildActionOnly]
+        //public ActionResult RenderUserName()
+        //{
             
+        //    string username = User.Identity.Name;
 
-            return PartialView("_RenderUserName", vm);
+        //    if (string.IsNullOrEmpty(username))
+        //    {
+        //        return null;
+        //    }
+
+
+        //    NavBarUserVM vm = this.service.GetNavBarUserVM(username);
+        //    return PartialView("_RenderUserName", vm);
+        //}
+
+
+        [HttpPost]
+        public ActionResult Search(SearchBM bind)
+        {
+            SearchResultVM vm = this.service.GetSearchResultVM(bind);
+
+            return View(vm);
+        }
+
+
+        public ActionResult GetLoginPartial()
+        {
+            string username = User.Identity.Name;
+
+            if (string.IsNullOrEmpty(username))
+            {
+                return null;
+            }
+
+
+            NavBarUserVM vm = this.service.GetNavBarUserVM(username);
+            return PartialView("_LoginPartial", vm);
         }
     }
 }

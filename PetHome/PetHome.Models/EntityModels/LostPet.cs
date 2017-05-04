@@ -1,21 +1,18 @@
 ﻿using PetHome.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetHome.Models.EntityModels
 {
+    [Table("LostPets")]
     public class LostPet : Pet
     {
-      
 
+        public LostPet()
+        {
+            this.IsLostPet = true;
+        }
         public string Name { get; set; }
         public int? Age { get; set; }
-        public string LastSeenLocation { get; set; }
-        public DateTime? LastSeenTime { get; set; }
-        public string DistinguishingFeatures { get; set; }
         public Temper? Temper { get; set; }
 
     }

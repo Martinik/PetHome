@@ -1,0 +1,147 @@
+﻿@model PetHome.Models.ViewModels.Admin.AdminPanelVM
+
+@{
+    ViewBag.Title = "AdminPanel";
+}
+
+<h2>AdminPanel</h2>
+
+
+<div><h1>Users</h1></div>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Users.First().Id)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Users.First().Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.First().Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Users", new { username = item.Username, area = "" }, null) |
+                @Html.ActionLink("Details", "Profile", "Users", new { username = item.Username, area = "" }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<div class="home-page-pets"><h1>Lost Pets</h1></div>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LostPets.First().Id)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LostPets.First().AnimalType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LostPets.First().Breed)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.LostPets.First().ThumbnailUrl)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.LostPets)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Breed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThumbnailUrl)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "LostPets", new { id = item.Id, area = "" }, null) |
+                @Html.ActionLink("Details", "Details", "LostPets", new { id = item.Id, area = "" }, null) |
+                @Html.ActionLink("Delete", "ConfirmDelete", "LostPets", new { id = item.Id, area = "" }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+<div><h1>Found Pets</h1></div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FoundPets.First().Id)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FoundPets.First().AnimalType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FoundPets.First().Breed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FoundPets.First().ThumbnailUrl)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.FoundPets)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Breed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThumbnailUrl)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "FoundPets", new { id = item.Id }, null) |
+                @Html.ActionLink("Details", "Details", "FoundPets", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "ConfirmDelete", "FoundPets", new { id = item.Id, area = "" }, null)
+
+
+            </td>
+        </tr>
+    }
+
+</table>

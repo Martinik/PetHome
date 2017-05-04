@@ -1,4 +1,4 @@
 ﻿@model PetHome.Models.ViewModels.Home.NavBarUserVM
+@Html.ActionLink("Hello " + Model.Name + "!", "Profile", "Users", routeValues: new { username = User.Identity.Name }, htmlAttributes: new { title = "Manage" })
 
-@Html.ActionLink("Hello " + Model.Name + "!", "Profile", "Users", routeValues: null, htmlAttributes: new { title = "Manage" })
 

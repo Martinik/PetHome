@@ -1,31 +1,101 @@
-﻿@{
+﻿@model PetHome.Models.ViewModels.Home.HomeIndexVM
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/Content/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/slick-theme.css">
+}
+<div class="bg-faded p-4 my-4">
+    <!-- Image Carousel -->
+    <!-- Welcome Message -->
+    <div class="text-center mt-4">
+        <div class="text-heading text-muted text-lg">Welcome To</div>
+        <h1 class="my-2">Pet-Home</h1>
+        @*<div class="text-heading text-muted text-lg"> <strong> </strong></div>*@
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+<div class="bg-faded p-4 my-4">
+    <hr class="divider">
+    <h2 class="text-center text-lg text-uppercase my-0">Recently <strong>lost</strong> pets</h2>
+    <hr class="divider">
+
+
+
+    <section class="center slider">
+
+        @foreach (var item in Model.LostPets)
+        {
+            <div>
+                <a href="/lostpets/details/@item.Id">
+                    <div class="slide-container">
+                        <img src="@item.ThumbnailUrl" alt="@item.Name avatar" class="slide-image">
+                        <div class="slide-middle">
+                            <div class="slide-text">@item.Name</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+       
+    </section>
+
 </div>
+<div class="bg-faded p-4 my-4">
+    <hr class="divider">
+    <h2 class="text-center text-lg text-uppercase my-0">Recently <strong>found</strong> pets</h2>
+    <hr class="divider">
+   
+    <section class="center slider">
+
+
+        @foreach (var item in Model.FoundPets)
+        {
+            <div>
+                <a href="/foundpets/details/@item.Id">
+                    <div class="slide-container">
+                        <img src="@item.ThumbnailUrl" alt="@item.Breed avatar" class="slide-image">
+                        <div class="slide-middle">
+                            <div class="slide-text"><span>Location: <br />@item.LastSeenLocation</span></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </section>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(document).on('ready', function () {
+            $(".regular").slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 3
+            });
+            $(".center").slick({
+                dots: true,
+                infinite: true,
+                centerMode: true,
+                slidesToShow: 3,
+                slidesToScroll: 3
+            });
+            $(".variable").slick({
+                dots: true,
+                infinite: true,
+                variableWidth: true
+            });
+        });
+    </script>
+}

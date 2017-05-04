@@ -59,13 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201704301253060_initial.cs" />
-    <Compile Include="Migrations\201704301253060_initial.Designer.cs">
-      <DependentUpon>201704301253060_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704301309588_petToPets.cs" />
-    <Compile Include="Migrations\201704301309588_petToPets.Designer.cs">
-      <DependentUpon>201704301309588_petToPets.cs</DependentUpon>
+    <Compile Include="Migrations\201705021147103_initial.cs" />
+    <Compile Include="Migrations\201705021147103_initial.Designer.cs">
+      <DependentUpon>201705021147103_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PetHomeContext.cs" />
@@ -82,13 +78,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704301253060_initial.resx">
-      <DependentUpon>201704301253060_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704301309588_petToPets.resx">
-      <DependentUpon>201704301309588_petToPets.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705021147103_initial.resx">
+      <DependentUpon>201705021147103_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

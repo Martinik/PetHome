@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using PetHome.Models.EntityModels;
 using PetHome.Models.ViewModels.Account;
 
@@ -14,10 +10,18 @@ namespace PetHome.Services
         {
             var user = new ApplicationUser
             {
-                UserName = this.GenerateUserNameFromEmail(model.Email),
                 Email = model.Email,
                 Name = this.GenerateNameFromEmail(model.Email)
             };
+
+            if ( string.IsNullOrEmpty(model.UserName))
+            {
+                user.UserName = this.GenerateUserNameFromEmail(model.Email);
+            }
+            else
+            {
+                user.UserName = model.UserName;
+            }
 
             return user;
         }

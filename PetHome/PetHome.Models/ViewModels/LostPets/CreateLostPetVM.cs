@@ -1,10 +1,7 @@
 ﻿using PetHome.Models.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace PetHome.Models.ViewModels.LostPets
 {
@@ -21,7 +18,10 @@ namespace PetHome.Models.ViewModels.LostPets
         public DateTime? LastSeenTime { get; set; }
         public string DistinguishingFeatures { get; set; }
         public Temper? Temper { get; set; }
-        public string Thumnbail { get; set; }   
+        //public string Thumbnail { get; set; }   
         public string Description { get; set; }
+
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase Thumbnail { get; set; }
     }
 }
