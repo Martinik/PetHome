@@ -1,5 +1,4 @@
-﻿body {
-}
+﻿
 /*Temporary navbar container fix*/
 .navbar-toggler {
     z-index: 1;
@@ -81,4 +80,11 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+
+.pet-table-thumbnail{
+    max-height: 80px;
+    max-width: 100px;
+
 }

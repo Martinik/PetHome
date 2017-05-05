@@ -1,16 +1,21 @@
 ﻿@model IEnumerable<PetHome.Models.ViewModels.FoundPets.FoundPetVM>
 
+@using PetHome.Web.Extensions
+
 @{
     ViewBag.Title = "Found Pets";
 }
 
-<h2>Lost Pets</h2>
+<h2>Found Pets</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+           
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.AnimalType)
         </th>
@@ -23,15 +28,17 @@
         <th>
             @Html.DisplayNameFor(model => model.LastSeenTime)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThumbnailUrl)
-        </th>
+
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @*<img src="@item.ThumbnailUrl" class="pet-table-thumbnail"/>*@
+               @Html.Image(@item.ThumbnailUrl, "thumbnail")
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AnimalType)
             </td>
@@ -44,9 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastSeenTime)
             </td>
-            <td>
-                <img src="@item.ThumbnailUrl" />
-            </td>
+
             <td>
                 @if (User.Identity.Name == item.AssociatedUsername || User.IsInRole("Admin"))
                 {

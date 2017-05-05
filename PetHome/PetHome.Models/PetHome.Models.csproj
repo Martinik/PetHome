@@ -95,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingModels\Comments\AddComentBM.cs" />
-    <Compile Include="BindingModels\EditUserBM.cs" />
+    <Compile Include="BindingModels\Users\EditUserBM.cs" />
     <Compile Include="BindingModels\FoundPets\CreateFoundPetBM.cs" />
     <Compile Include="BindingModels\FoundPets\DeleteFoundPetBM.cs" />
     <Compile Include="BindingModels\FoundPets\EditFoundPetBM.cs" />

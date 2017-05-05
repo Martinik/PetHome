@@ -1,126 +1,128 @@
 ﻿@model PetHome.Models.ViewModels.LostPets.LostPetVM
+@using PetHome.Web.Extensions
 
-@{
-    ViewBag.Title = $"Details";
-}
-
-<h2>Details about @Model.Name</h2>
-
-<div>
-
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Breed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Breed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastSeenLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastSeenLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastSeenTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastSeenTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThumbnailUrl)
-        </dt>
-
-        <dd>
-            <img  src="@Model.ThumbnailUrl"/>
-    
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @if (User.Identity.IsAuthenticated && (Model.AssociatedUsername == User.Identity.Name || User.IsInRole("Admin")))
-    {
-        @Html.ActionLink("Edit","Edit", "LostPets", new { @id = Model.Id}, null)
-        @: |
+    @{
+        ViewBag.Title = $"Details";
     }
 
-    @Html.ActionLink("Go Back", "Index")
-</p>
+    <h2>Details about @Model.Name</h2>
 
+    <div>
 
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-<button type="button" class="btn" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
-    <h3 > Comments</h3>
-</button>
-<div id="collapse" class="collapse">
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
+            <dt>
+                @Html.DisplayNameFor(model => model.Age)
+            </dt>
 
-    @if (User.Identity.IsAuthenticated)
-    {
-        <span>speaking as @Model.AssociatedUsername</span>
-        using (Html.BeginForm("AddComment", "Comments", FormMethod.Post))
+            <dd>
+                @Html.DisplayFor(model => model.Age)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Breed)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Breed)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastSeenLocation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastSeenLocation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastSeenTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastSeenTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ThumbnailUrl)
+            </dt>
+
+            <dd>
+                @*<img  src="@Model.ThumbnailUrl"/>*@
+                @Html.Image(@Model.ThumbnailUrl, "thumbnail")
+
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @if (User.Identity.IsAuthenticated && (Model.AssociatedUsername == User.Identity.Name || User.IsInRole("Admin")))
         {
-            <div>
-                @Html.EditorFor(model => Model.IsLostPet, new { htmlAttributes = new { @name = "isLostPet", @hidden = "hidden" } })
-                <input type="text" value=@Model.AssociatedUsername hidden="hidden" name="username" />
-                <input type="number" value=@Model.Id hidden="hidden" name="petId" />
-                <input type="text" placeholder="Add a comment..." name="content" />
-                <button type="submit" class="btn btn-default" id="submitComment" value="Submit">Save</button>
+            @Html.ActionLink("Edit", "Edit", "LostPets", new { @id = Model.Id }, null)
+            @: |
+    }
+
+        @Html.ActionLink("Go Back", "Index")
+    </p>
+
+
+
+    <button type="button" class="btn" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+        <h3> Comments</h3>
+    </button>
+    <div id="collapse" class="collapse">
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <span>speaking as @Model.AssociatedUsername</span>
+            using (Html.BeginForm("AddComment", "Comments", FormMethod.Post))
+            {
+                <div>
+                    @Html.EditorFor(model => Model.IsLostPet, new { htmlAttributes = new { @name = "isLostPet", @hidden = "hidden" } })
+                    <input type="text" value=@Model.AssociatedUsername hidden="hidden" name="username" />
+                    <input type="number" value=@Model.Id hidden="hidden" name="petId" />
+                    <input type="text" placeholder="Add a comment..." name="content" />
+                    <button type="submit" class="btn btn-default" id="submitComment" value="Submit">Save</button>
+                </div>
+            }
+        }
+
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="glyphicon-comment glyphicon" style="display: block;">
+                <div class="form-group">
+                    @Html.LabelFor(model => comment.Author.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => comment.Author.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => comment.Author.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => comment.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => comment.Content, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => comment.Content, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => comment.DatePosted, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => comment.DatePosted, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => comment.DatePosted, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
             </div>
         }
-    }
-
-    @foreach (var comment in Model.Comments)
-    {
-        <div class="glyphicon-comment glyphicon" style="display: block;">
-            <div class="form-group">
-                @Html.LabelFor(model => comment.Author.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => comment.Author.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => comment.Author.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => comment.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => comment.Content, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => comment.Content, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => comment.DatePosted, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => comment.DatePosted, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => comment.DatePosted, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-        </div>
-    }
-</div>
+    </div>

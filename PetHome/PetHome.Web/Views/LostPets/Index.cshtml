@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -26,15 +29,16 @@
         <th>
             @Html.DisplayNameFor(model => model.LastSeenTime)
         </th>
-        <th>
-            Thumbnail
-        </th>
+
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                <img src="@item.ThumbnailUrl" class="pet-table-thumbnail" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -50,9 +54,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastSeenTime)
             </td>
-            <td>
-                <img src="@item.ThumbnailUrl" />
-            </td>
+
             <td>
                 @if (User.Identity.IsAuthenticated && (item.AssociatedUsername == User.Identity.Name || User.IsInRole("Admin")))
                 {
