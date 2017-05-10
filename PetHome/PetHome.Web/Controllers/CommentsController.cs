@@ -1,5 +1,5 @@
 ﻿using PetHome.Models.BindingModels.Comments;
-using PetHome.Services;
+using PetHome.Services.Interfaces;
 using System.Web.Mvc;
 
 namespace PetHome.Web.Controllers
@@ -7,11 +7,11 @@ namespace PetHome.Web.Controllers
     [Authorize]
     public class CommentsController : Controller
     {
-        private CommentsService service;
+        private ICommentsService service;
 
-        public CommentsController()
+        public CommentsController(ICommentsService service)
         {
-            this.service = new CommentsService();
+            this.service = service;
         }
 
         [HttpPost, Route("AddComment")]

@@ -14,7 +14,10 @@ namespace PetHome.Models.EntityModels
             this.Comments = new List<Comment>();
         }
 
+      
         public int Id { get; set; }
+
+       
         public AnimalType AnimalType { get; set; }
         public string Breed { get; set; }
         public string ThumbnailUrl { get; set; }

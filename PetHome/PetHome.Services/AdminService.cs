@@ -2,11 +2,18 @@
 using PetHome.Models.ViewModels.Admin;
 using AutoMapper;
 using PetHome.Models.EntityModels;
+using PetHome.Services.Interfaces;
+using PetHome.Data.Interfaces;
 
 namespace PetHome.Services
 {
-    public class AdminService : Service
+    public class AdminService : Service, IAdminService
     {
+        public AdminService(IPetHomeContext context)
+            :base(context)
+        {
+        }
+
         public AdminPanelVM GetAdminPanelVM()
         {
             var lostPets = this.Context.LostPets;

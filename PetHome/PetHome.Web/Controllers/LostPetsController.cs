@@ -1,6 +1,6 @@
 ﻿using PetHome.Models.BindingModels.LostPets;
 using PetHome.Models.ViewModels.LostPets;
-using PetHome.Services;
+using PetHome.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,11 +10,11 @@ namespace PetHome.Web.Controllers
     [RoutePrefix("LostPets")]
     public class LostPetsController : Controller
     {
-        private LostPetsService service;
+        private ILostPetsService service;
 
-        public LostPetsController()
+        public LostPetsController(ILostPetsService service)
         {
-            this.service = new LostPetsService();
+            this.service = service;
         }
 
         // GET: LostPets
@@ -48,11 +48,11 @@ namespace PetHome.Web.Controllers
                  "image/png"
             };
 
-            if (bind.Thumbnail == null || bind.Thumbnail.ContentLength == 0)
-            {
-                ModelState.AddModelError("Thumbnail", "This field is required");
-            }
-            else if (!validImageTypes.Contains(bind.Thumbnail.ContentType))
+            //if (bind.Thumbnail == null || bind.Thumbnail.ContentLength == 0)
+            //{
+            //    ModelState.AddModelError("Thumbnail", "This field is required");
+            //}
+            if (bind.Thumbnail != null && (!validImageTypes.Contains(bind.Thumbnail.ContentType)))
             {
                 ModelState.AddModelError("Thumbnail", "Please choose either a GIF, JPG or PNG image.");
             }
@@ -88,8 +88,7 @@ namespace PetHome.Web.Controllers
 
 
             return RedirectToAction("index", "home");
-
-            //TODO:  add custom redirect/ error message
+            
         }
 
 
@@ -108,11 +107,11 @@ namespace PetHome.Web.Controllers
                  "image/png"
             };
 
-            if (bind.Thumbnail == null || bind.Thumbnail.ContentLength == 0)
-            {
-                ModelState.AddModelError("Thumbnail", "This field is required");
-            }
-            else if (!validImageTypes.Contains(bind.Thumbnail.ContentType))
+            //if (bind.Thumbnail == null || bind.Thumbnail.ContentLength == 0)
+            //{
+            //    ModelState.AddModelError("Thumbnail", "This field is required");
+            //}
+            if (bind.Thumbnail != null && !validImageTypes.Contains(bind.Thumbnail.ContentType))
             {
                 ModelState.AddModelError("Thumbnail", "Please choose either a GIF, JPG or PNG image.");
             }
@@ -134,8 +133,7 @@ namespace PetHome.Web.Controllers
 
 
             return RedirectToAction("index", "home");
-
-            //TODO:  add custom redirect/ error message
+            
         }
 
 
@@ -154,8 +152,7 @@ namespace PetHome.Web.Controllers
             }
 
             return RedirectToAction("index", "home");
-
-            //TODO: Add custom error page
+            
         }
 
         [HttpPost, Route("delete/{id}")]
@@ -172,7 +169,7 @@ namespace PetHome.Web.Controllers
             }
 
             return RedirectToAction("index", "home");
-            //TODO: Add custom error page OR Error Messages
+         
         }
 
 

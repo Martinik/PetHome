@@ -5,27 +5,39 @@ using PetHome.Models.EntityModels;
 using PetHome.Models.BindingModels.LostPets;
 using PetHome.Models.ViewModels.LostPets;
 using System.IO;
+using PetHome.Data.Interfaces;
+using PetHome.Services.Interfaces;
 
 namespace PetHome.Services
 {
-    public class LostPetsService : Service
+    public class LostPetsService : Service, ILostPetsService
     {
+        public LostPetsService(IPetHomeContext context)
+            : base(context)
+        {
+        }
+
         public IEnumerable<LostPetVM> GetLostPetsVM()
         {
             IEnumerable<LostPetVM> vm = this.Context.LostPets.ToList().Select(pet => Mapper.Map<LostPet, LostPetVM>(pet)).ToList();
 
             foreach (var lostPet in vm)
             {
-                string username = this.Context.Users.FirstOrDefault(u => u.LostPets.FirstOrDefault(pet => pet.Id == lostPet.Id) != null).UserName;
+                var user = this.Context.Users.FirstOrDefault(u => u.LostPets.FirstOrDefault(pet => pet.Id == lostPet.Id) != null);
 
-                lostPet.AssociatedUsername = username;
+                if (user != null)
+                {
+                    string username = user.UserName;
+                    lostPet.AssociatedUsername = username;
+                }
+
                 lostPet.IsLostPet = true;
             }
 
             return vm;
         }
 
-  
+
         public LostPetVM GetLostPetVM(string username, int id)
         {
             LostPet lostPet = this.Context.LostPets.FirstOrDefault(p => p.Id == id);
@@ -52,10 +64,18 @@ namespace PetHome.Services
                 var imagePath = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath(uploadDir), bind.Thumbnail.FileName);
                 var imageUrl = uploadDir + "/" + bind.Thumbnail.FileName;
                 bind.Thumbnail.SaveAs(imagePath);
-                lostPet.ThumbnailUrl = imageUrl.Remove(0,1);
+                lostPet.ThumbnailUrl = imageUrl.Remove(0, 1);
             }
-        
-            associatedUser.LostPets.Add(lostPet);
+
+            if (associatedUser != null)
+            {
+                associatedUser.LostPets.Add(lostPet);
+            }
+            else
+            {
+                this.Context.LostPets.Add(lostPet);
+            }
+
             this.Context.SaveChanges();
 
         }
@@ -64,7 +84,7 @@ namespace PetHome.Services
         {
             ApplicationUser user = this.Context.Users.FirstOrDefault(u => u.UserName == username);
 
-            if (user.LostPets.Any(pet => pet.Id == id))
+            if (user != null && user.LostPets.Any(pet => pet.Id == id))
             {
                 return true;
             }

@@ -1,14 +1,14 @@
-﻿using PetHome.Data;
+﻿using PetHome.Data.Interfaces;
 
 namespace PetHome.Services
 {
     public abstract class Service
     {
-        public Service()
+        public Service(IPetHomeContext context)
         {
-            this.Context = new PetHomeContext();
+            this.Context = context;
         }
 
-        protected PetHomeContext Context { get; }
+        protected IPetHomeContext Context { get; }
     }
 }

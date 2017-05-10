@@ -1,6 +1,6 @@
 ﻿using PetHome.Models.BindingModels;
 using PetHome.Models.ViewModels.Users;
-using PetHome.Services;
+using PetHome.Services.Interfaces;
 using System.Web.Mvc;
 
 namespace PetHome.Web.Controllers
@@ -8,14 +8,12 @@ namespace PetHome.Web.Controllers
     [Authorize]
     public class UsersController : Controller
     {
-        private UsersService service;
+        private IUsersService service;
 
-        public UsersController()
+        public UsersController(IUsersService service)
         {
-            this.service = new UsersService();
+            this.service = service;
         }
-
-
 
 
         [HttpGet, Route("profile/{username}")]
@@ -38,17 +36,6 @@ namespace PetHome.Web.Controllers
         }
 
 
-        //[HttpGet]
-        //public ActionResult Edit()
-        //{
-        //    string userName = User.Identity.Name;
-        //    EditUserVM vm = this.service.GetEditUserVm(userName);
-        //    return View(vm);
-
-
-        //}
-
-
         [HttpGet, Route("Edit/{username}")]
         public ActionResult Edit(string username)
         {
@@ -67,9 +54,6 @@ namespace PetHome.Web.Controllers
             }
 
             return HttpNotFound("You can not edit this user!");
-
-
-
 
         }
 

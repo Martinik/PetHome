@@ -1,5 +1,5 @@
 ﻿using PetHome.Models.ViewModels.Admin;
-using PetHome.Services;
+using PetHome.Services.Interfaces;
 using System.Web.Mvc;
 
 namespace PetHome.Web.Areas.Admin.Controllers
@@ -7,11 +7,11 @@ namespace PetHome.Web.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private AdminService service;
+        private IAdminService service;
 
-        public AdminController()
+        public AdminController(IAdminService service)
         {
-            this.service = new AdminService();
+            this.service = service;
         }
 
         // GET: Admin/Admin

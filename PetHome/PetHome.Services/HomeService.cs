@@ -7,11 +7,19 @@ using PetHome.Models.ViewModels.LostPets;
 using AutoMapper;
 using PetHome.Models.ViewModels.FoundPets;
 using PetHome.Models.BindingModels.Home;
+using PetHome.Services.Interfaces;
+using PetHome.Data.Interfaces;
 
 namespace PetHome.Services
 {
-    public class HomeService : Service
+    public class HomeService : Service, IHomeService
     {
+
+        public HomeService(IPetHomeContext context)
+            :base(context)
+        {
+        }
+
         public string GetNameOfUser(string username)
         {
             var user = this.Context.Users.FirstOrDefault(u => u.UserName == username);

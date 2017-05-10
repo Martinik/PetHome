@@ -5,20 +5,32 @@ using PetHome.Models.ViewModels.FoundPets;
 using AutoMapper;
 using PetHome.Models.EntityModels;
 using System.IO;
+using PetHome.Services.Interfaces;
+using PetHome.Data.Interfaces;
 
 namespace PetHome.Services
 {
-    public class FoundPetsService : Service
+    public class FoundPetsService : Service, IFoundPetsService
     {
+        public FoundPetsService(IPetHomeContext context)
+            : base(context)
+        {
+        }
+
         public IEnumerable<FoundPetVM> GetFoundPetsVM()
         {
             IEnumerable<FoundPetVM> vm = this.Context.FoundPets.ToList().Select(pet => Mapper.Map<FoundPet, FoundPetVM>(pet)).ToList();
 
             foreach (var foundPet in vm)
             {
-                string username = this.Context.Users.FirstOrDefault(u => u.FoundPets.FirstOrDefault(pet => pet.Id == foundPet.Id) != null).UserName;
+                var user = this.Context.Users.FirstOrDefault(u => u.FoundPets.FirstOrDefault(pet => pet.Id == foundPet.Id) != null);
 
-                foundPet.AssociatedUsername = username;
+                if (user != null)
+                {
+                    string username = user.UserName;
+                    foundPet.AssociatedUsername = username;
+                }
+
                 foundPet.IsLostPet = false;
             }
 
@@ -52,7 +64,15 @@ namespace PetHome.Services
                 foundPet.ThumbnailUrl = imageUrl.Remove(0, 1);
             }
 
-            associatedUser.FoundPets.Add(foundPet);
+            if (associatedUser != null)
+            {
+                associatedUser.FoundPets.Add(foundPet);
+            }
+            else
+            {
+                this.Context.FoundPets.Add(foundPet);
+            }
+
             this.Context.SaveChanges();
         }
 
@@ -60,7 +80,7 @@ namespace PetHome.Services
         {
             ApplicationUser user = this.Context.Users.FirstOrDefault(u => u.UserName == username);
 
-            if (user.FoundPets.Any(pet => pet.Id == id))
+            if (user != null && user.FoundPets.Any(pet => pet.Id == id))
             {
                 return true;
             }
@@ -73,7 +93,7 @@ namespace PetHome.Services
             FoundPet foundPet = this.Context.FoundPets.FirstOrDefault(p => p.Id == id);
 
             EditFoundPetVM vm = Mapper.Map<FoundPet, EditFoundPetVM>(foundPet);
-            
+
             return vm;
         }
 
@@ -105,13 +125,12 @@ namespace PetHome.Services
         {
             FoundPet foundPet = this.Context.FoundPets.Find(bind.Id);
 
-            
+
             foundPet.AnimalType = bind.AnimalType;
-            foundPet.Breed = bind.Breed;         
+            foundPet.Breed = bind.Breed;
             foundPet.LastSeenLocation = bind.LastSeenLocation;
             foundPet.LastSeenTime = bind.LastSeenTime;
             foundPet.DistinguishingFeatures = bind.DistinguishingFeatures;
-           // foundPet.ThumbnailUrl = bind.Thumbnail;
             foundPet.Description = bind.Description;
             foundPet.ActionTaken = bind.ActionTaken;
 
@@ -130,6 +149,6 @@ namespace PetHome.Services
 
 
 
- 
+
     }
 }

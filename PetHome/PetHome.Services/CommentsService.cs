@@ -2,11 +2,18 @@
 using System.Linq;
 using PetHome.Models.BindingModels.Comments;
 using PetHome.Models.EntityModels;
+using PetHome.Services.Interfaces;
+using PetHome.Data.Interfaces;
 
 namespace PetHome.Services
 {
-    public class CommentsService : Service
+    public class CommentsService : Service, ICommentsService
     {
+        public CommentsService(IPetHomeContext context)
+            :base(context)
+        {
+        }
+
         public void AddComment(AddComentBM bind)
         {      
             var author = this.Context.Users.FirstOrDefault(u => u.UserName == bind.Username);

@@ -1,10 +1,11 @@
 namespace PetHome.Data
 {
+    using Interfaces;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models.EntityModels;
     using System.Data.Entity;
 
-    public class PetHomeContext : IdentityDbContext<ApplicationUser>
+    public class PetHomeContext : IdentityDbContext<ApplicationUser>, IPetHomeContext
     {
        
         public PetHomeContext()
@@ -15,9 +16,7 @@ namespace PetHome.Data
         public DbSet<FoundPet> FoundPets { get; set; }
         public DbSet<LostPet> LostPets { get; set; }
         public DbSet<Comment> Comments { get; set; }
-
-
-
+        public override IDbSet<ApplicationUser> Users { get; set; }
 
         public static PetHomeContext Create()
         {

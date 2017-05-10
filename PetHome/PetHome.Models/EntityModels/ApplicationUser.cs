@@ -13,11 +13,11 @@ namespace PetHome.Models.EntityModels
             this.LostPets = new List<LostPet>();
             this.FoundPets = new List<FoundPet>();
             this.PostedComments = new List<Comment>();
-            
+         
         }
 
-        
 
+        public override string UserName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Skype { get; set; }

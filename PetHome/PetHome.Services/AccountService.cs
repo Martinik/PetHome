@@ -1,17 +1,27 @@
 ﻿using System.Linq;
+using PetHome.Data.Interfaces;
 using PetHome.Models.EntityModels;
 using PetHome.Models.ViewModels.Account;
+using PetHome.Services.Interfaces;
+using System;
 
 namespace PetHome.Services
 {
-    public class AccountService : Service
+    public class AccountService : Service, IAccountService
     {
+        public AccountService(IPetHomeContext context) 
+            : base(context)
+        {
+        }
+
         public ApplicationUser GetNewUser(RegisterViewModel model)
         {
             var user = new ApplicationUser
             {
                 Email = model.Email,
-                Name = this.GenerateNameFromEmail(model.Email)
+                Name = this.GenerateNameFromEmail(model.Email),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = model.UserName
             };
 
             if ( string.IsNullOrEmpty(model.UserName))

@@ -4,15 +4,27 @@ using PetHome.Models.ViewModels.Users;
 using System.Collections.Generic;
 using System.Linq;
 using PetHome.Models.BindingModels;
+using PetHome.Services.Interfaces;
+using PetHome.Data.Interfaces;
 
 namespace PetHome.Services
 {
-    public class UsersService : Service
+    public class UsersService : Service, IUsersService
     {
+        public UsersService(IPetHomeContext context)
+            :base(context)
+        {
+
+        }
+
         public ProfileVM GetProfileVm(string userName)
         {
 
             ApplicationUser currentUser = this.Context.Users.FirstOrDefault(u => u.UserName == userName);
+            if (currentUser == null)
+            {
+                return null;
+            }
             ProfileVM vm = Mapper.Map<ApplicationUser, ProfileVM>(currentUser);
 
             IEnumerable<LostPet> lostPets = currentUser.LostPets;
@@ -43,7 +55,7 @@ namespace PetHome.Services
         public void EditUser(EditUserBM bind, string userName)
         {
 
-            ApplicationUser user = this.Context.Users.FirstOrDefault(u => u.UserName == userName);
+            ApplicationUser user = this.Context.Users.FirstOrDefault(u => u.UserName == bind.UserName);
 
             user.Name = bind.Name;
             user.Surname = bind.Surname;

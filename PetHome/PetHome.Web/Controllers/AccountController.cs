@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PetHome.Models.ViewModels.Account;
 using PetHome.Models.EntityModels;
-using PetHome.Services;
+using PetHome.Services.Interfaces;
 
 namespace PetHome.Web.Controllers
 {
@@ -16,11 +16,11 @@ namespace PetHome.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private AccountService service;
+        private IAccountService service;
 
-        public AccountController()
+        public AccountController(IAccountService service)
         {
-            this.service = new AccountService();
+            this.service = service;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -160,7 +160,7 @@ namespace PetHome.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    this.UserManager.AddToRole(user.Id, "R");
+                    this.UserManager.AddToRole(user.Id, "Regular");
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 

@@ -1,17 +1,17 @@
 ﻿using PetHome.Models.BindingModels.Home;
 using PetHome.Models.ViewModels.Home;
-using PetHome.Services;
+using PetHome.Services.Interfaces;
 using System.Web.Mvc;
 
 namespace PetHome.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private HomeService service;
+        private IHomeService service;
 
-        public HomeController()
+        public HomeController(IHomeService service)
         {
-            this.service = new HomeService();
+            this.service = service;
         }
 
         [HttpGet, Route("index")]
@@ -21,24 +21,6 @@ namespace PetHome.Web.Controllers
 
             return View(vm);
         }
-
- 
-
-        //[ChildActionOnly]
-        //public ActionResult RenderUserName()
-        //{
-            
-        //    string username = User.Identity.Name;
-
-        //    if (string.IsNullOrEmpty(username))
-        //    {
-        //        return null;
-        //    }
-
-
-        //    NavBarUserVM vm = this.service.GetNavBarUserVM(username);
-        //    return PartialView("_RenderUserName", vm);
-        //}
 
 
         [HttpPost]
